@@ -5,6 +5,7 @@ const todoList = document.querySelector("#todo-list");
 const clearTodos = document.querySelector("#clear-todos");
 
 todoForm.addEventListener("submit", addTodo);
+todoList.addEventListener("click", deleteTodo);
 
 function addTodo(e) {
 	e.preventDefault();
@@ -23,14 +24,27 @@ function addTodo(e) {
 
 	// Menambahkan properti untuk a element
 	a.href = "#";
-	a.className = "badge badge-danger";
+	a.className = "badge badge-danger delete-todo";
 
 	a.innerHTML = "Delete";
 
 	// Menyisipkan element a ke dalam children li
 	li.appendChild(a);
 
+	// Memasukkan element li ke dalam todoList
 	todoList.appendChild(li);
 
-	console.log(li);
+	todoInput.value = "";
+}
+
+function deleteTodo(e) {
+	e.preventDefault();
+
+	if (e.target.classList.contains("delete-todo")) {
+		if (confirm("Apakah yakin akan menghapus?")) {
+			const parent = e.target.parentElement;
+
+			parent.remove();
+		}
+	}
 }
